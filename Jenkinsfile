@@ -4,8 +4,8 @@ pipeline {
     environment {
         IMAGE_NAME = "aceest-fitness"
         IMAGE_TAG  = "${env.BUILD_NUMBER}"
-        PYTHON = "C:\Users\srivi.DESKTOP-L6OI7G9\AppData\Local\Python\bin\python.exe"
-        PIP = "C:\Users\srivi.DESKTOP-L6OI7G9\AppData\Local\Python\bin\pip.exe"
+        PYTHON = "C:\\Users\\srivi.DESKTOP-L6OI7G9\\AppData\\Local\\Python\\bin\\python.exe"
+        PIP = "C:\\Users\\srivi.DESKTOP-L6OI7G9\\AppData\\Local\\Python\\bin\\pip.exe"
     }
 
     stages {
