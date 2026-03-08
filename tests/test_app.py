@@ -206,7 +206,7 @@ def test_bmi_normal_weight(client):
 
 
 def test_bmi_overweight(client):
-    payload = {"weight": 90, "height": 170}
+    payload = {"weight": 80, "height": 170}
     response = client.post("/bmi",
                            data=json.dumps(payload),
                            content_type="application/json")
