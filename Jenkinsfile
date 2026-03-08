@@ -4,6 +4,8 @@ pipeline {
     environment {
         IMAGE_NAME = "aceest-fitness"
         IMAGE_TAG  = "${env.BUILD_NUMBER}"
+        PYTHON = "C:\Users\srivi.DESKTOP-L6OI7G9\AppData\Local\Python\bin\python.exe"
+        PIP = "C:\Users\srivi.DESKTOP-L6OI7G9\AppData\Local\Python\bin\pip.exe"
     }
 
     stages {
@@ -18,33 +20,33 @@ pipeline {
         stage('Environment Setup') {
             steps {
                 echo 'Setting up Python virtual environment...'
-                bat '''
-                    python -m venv venv
+                bat """
+                    "${PYTHON}" -m venv venv
                     call venv\\Scripts\\activate.bat
-                    python -m pip install --upgrade pip
-                    pip install -r requirements.txt
-                '''
+                    "${PYTHON}" -m pip install --upgrade pip
+                    "${PIP}" install -r requirements.txt
+                """
             }
         }
 
         stage('Lint') {
             steps {
                 echo 'Running flake8 syntax check...'
-                bat '''
+                bat """
                     call venv\\Scripts\\activate.bat
-                    pip install flake8
-                    flake8 app.py --select=E9,F63,F7,F82 --show-source --statistics
-                '''
+                    "${PIP}" install flake8
+                    venv\\Scripts\\flake8.exe app.py --select=E9,F63,F7,F82 --show-source --statistics
+                """
             }
         }
 
         stage('Unit Tests') {
             steps {
                 echo 'Running Pytest unit tests...'
-                bat '''
+                bat """
                     call venv\\Scripts\\activate.bat
-                    python -m pytest tests/ -v --tb=short
-                '''
+                    venv\\Scripts\\pytest.exe tests/ -v --tb=short
+                """
             }
         }
 
