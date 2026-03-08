@@ -2,8 +2,6 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "aceest-fitness"
-        IMAGE_TAG  = "${env.BUILD_NUMBER}"
         PYTHON = "C:\\Users\\srivi.DESKTOP-L6OI7G9\\AppData\\Local\\Python\\bin\\python.exe"
         PIP = "C:\\Users\\srivi.DESKTOP-L6OI7G9\\AppData\\Local\\Python\\bin\\pip.exe"
     }
@@ -23,8 +21,9 @@ pipeline {
                 bat """
                     "${PYTHON}" -m venv venv
                     call venv\\Scripts\\activate.bat
-                    "${PYTHON}" -m pip install --upgrade pip
-                    "${PIP}" install -r requirements.txt
+                    venv\\Scripts\\python.exe -m pip install --upgrade pip
+                    venv\\Scripts\\pip.exe install -r requirements.txt
+                    venv\\Scripts\\pip.exe install flake8
                 """
             }
         }
@@ -34,8 +33,7 @@ pipeline {
                 echo 'Running flake8 syntax check...'
                 bat """
                     call venv\\Scripts\\activate.bat
-                    "${PIP}" install flake8
-                    venv\\Scripts\\flake8.exe app.py --select=E9,F63,F7,F82 --show-source --statistics
+                    venv\\Scripts\\python.exe -m flake8 app.py --select=E9,F63,F7,F82 --show-source --statistics
                 """
             }
         }
@@ -45,7 +43,7 @@ pipeline {
                 echo 'Running Pytest unit tests...'
                 bat """
                     call venv\\Scripts\\activate.bat
-                    venv\\Scripts\\pytest.exe tests/ -v --tb=short
+                    venv\\Scripts\\python.exe -m pytest tests/ -v --tb=short
                 """
             }
         }
